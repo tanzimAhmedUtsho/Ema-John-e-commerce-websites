@@ -2,20 +2,21 @@ import React, { useEffect, useState } from "react";
 import { addToDb, getStoredCart } from "../../utilities/fakedb";
 import Cart from "../Cart/Cart";
 import Product from "../Product/Product";
-import "./Shop.css";
+import "./Dokan.css";
 
-const Shop = ({ product, handleAddToCart }) => {
+const Dokan = () => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetch("products.json")
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
       });
-  },[])
-  useEffect(()=>{
+  }, []);
+
+  useEffect(() => {
     const storedCart = getStoredCart();
     const savedCart = [];
     for (const id in storedCart) {
@@ -27,7 +28,8 @@ const Shop = ({ product, handleAddToCart }) => {
       }
     }
     setCart(savedCart);
-  },[products])
+  }, [products]);
+
   const handleAddToCart = (selectedProduct) => {
     console.log(selectedProduct);
     let newCart = [];
@@ -43,22 +45,24 @@ const Shop = ({ product, handleAddToCart }) => {
       setCart(newCart);
       addToDb(selectedProduct.id);
     }
+  };
+
   return (
     <div className="shop-container">
-        <div className="product-container">
-          {products.map((product) => (
-            <Product
-              key={product.id}
-              product={product}
-              handleAddToCart={handleAddToCart}
-            ></Product>
-          ))}
-        </div>
-        <div className="cart-container">
-          <Cart cart={cart}></Cart>
-        </div>
+      <div className="product-container">
+        {products.map((product) => (
+          <Product
+            key={product.id}
+            product={product}
+            handleAddToCart={handleAddToCart}
+          ></Product>
+        ))}
       </div>
+      <div className="cart-container">
+        <Cart cart={cart}></Cart>
+      </div>
+    </div>
   );
 };
 
-export default Shop;
+export default Dokan;
