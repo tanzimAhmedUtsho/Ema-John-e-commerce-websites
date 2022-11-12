@@ -35,6 +35,7 @@ const Dokan = () => {
     let newCart = [];
     const exists = cart.find((product) => product.id === selectedProduct.id);
     if (!exists) {
+      J;
       selectedProduct.quantity = 1;
       newCart = [...cart, selectedProduct];
     } else {
